@@ -10,7 +10,7 @@ local use = packer.use
 
 local config = require('polymorphic.core.config')
 return require('packer').startup(function()
-	use { 'wbthomason/packer.nvim' }
+	use { 'wbthomason/packer.nvim', 'lewis6991/impatient.nvim' }
 
 	if polymorphic_packer.first_run then
 		packer.sync()
