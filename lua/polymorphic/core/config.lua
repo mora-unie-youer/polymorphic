@@ -5,7 +5,72 @@
 local utils = require('polymorphic.utils')
 
 local default_config = {
-	editor = {},
+	editor = {
+		['g:mapleader'] = ',',
+		['g:maplocalleader'] = '.',
+
+		backspace = { 'eol', 'start', 'indent' },
+		clipboard = 'unnamedplus',
+		encoding = 'utf-8',
+		fileformats = { 'unix', 'mac', 'dos' },
+		matchpairs = { '(:)', '{:}', '[:]', '<:>' },
+		syntax = 'enable',
+
+		autoindent = true,
+		expandtab = false,
+		shiftround = true,
+		shiftwidth = 2,
+		smartindent = true,
+		softtabstop = 2,
+		tabstop = 2,
+
+		hlsearch = true,
+		ignorecase = true,
+		incsearch = true,
+		smartcase = true,
+		wildignore = { '*/.git/*', '*/node_modules/*' },
+		wildmenu = true,
+		wrapscan = true,
+
+		cursorline = true,
+		laststatus = 2,
+		lazyredraw = true,
+		list = true,
+		listchars = {
+			tab = '|-',
+			trail = '·',
+			lead = '·',
+			extends = '»',
+			precedes = '«',
+			nbsp = '×'
+		},
+		mouse = 'a',
+		number = true,
+		relativenumber = false,
+		scrolloff = 18,
+		showmode = false,
+		sidescrolloff = 3,
+		signcolumn = 'yes',
+		splitbelow = true,
+		splitright = true,
+		wrap = false,
+
+		backup = false,
+		swapfile = false,
+		writebackup = false,
+
+		redrawtime = 1500,
+		timeout = true,
+		timeoutlen = 250,
+		ttimeout = true,
+		ttimeoutlen = 10,
+		updatetime = 100,
+
+		colorcolumn = '80',
+		errorbells = true,
+		termguicolors = true,
+		visualbell = true
+	},
 	keymappings = {},
 	plugins = {
 		add = {},
