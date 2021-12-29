@@ -20,4 +20,14 @@ function U.split(str, sep)
 	return result
 end
 
+function U.unload(module_pattern, reload)
+	reload = reload or false
+	for module, _ in pairs(package.loaded) do
+		if module:match(module_pattern) then
+			package.loaded[module] = nil
+			if reload then require(module) end
+		end
+	end
+end
+
 return U
