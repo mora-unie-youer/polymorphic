@@ -12,4 +12,11 @@
 --                https://notabug.org/mora-unie-youer/polymorphic
 --       License: MIT
 
-print('Hello, world!')
+if vim.fn.has('nvim-0.6') == 0 then
+	error('Need NeoVim 0.6 to run polymorphic configuration!')
+end
+
+local ok, err = pcall(require, 'polymorphic.core')
+if not ok then
+	error(('Core loading failed...\n\n%s'):format(err))
+end
