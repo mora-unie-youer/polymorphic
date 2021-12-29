@@ -72,9 +72,18 @@ local default_config = {
 		visualbell = true
 	},
 	keymappings = {},
+
 	plugins = {
 		add = {},
-		config = {},
+		config = {
+			['wbthomason/packer.nvim'] = {
+				git = {
+					clone_timeout = 600,
+				},
+				auto_clean = true,
+				compile_on_sync = true,
+			}
+		},
 		disable = {},
 	},
 	theme = 'neovim',
@@ -92,6 +101,10 @@ function default_config:load_global_variables()
 
 	self.path.home = os.getenv('HOME')
 	self.path.cache = self.path.home .. '/.cache/nvim'
+
+	self.path.compiled = self.path.polymorphic .. '/_compiled.lua'
+	self.path.packer = self.path.data .. '/site/pack/packer/start/packer.nvim'
+	self.plugins.config['wbthomason/packer.nvim'].compile_path = self.path.compiled
 end
 default_config:load_global_variables()
 
