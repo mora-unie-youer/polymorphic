@@ -19,12 +19,50 @@
 
 local system = require('polymorphic.core.system')
 
+local logging_level = 'trace'
+local default_config = {
+	-- Name of the module where logging. Prepended to log messages
+	module = 'polymorphic',
+
+	-- Print logs to console
+	use_console = true,
+
+	-- Use highlighting in console
+	highlights = true,
+
+	-- Write logs to file
+	use_file = true,
+
+	-- Logs above this level will be logged
+	level = logging_level,
+
+	-- Level configuration
+	modes = {
+		{ name = 'trace', hl = 'Comment' },
+		{ name = 'debug', hl = 'Comment' },
+		{ name = 'info',  hl = 'None' },
+		{ name = 'warn',  hl = 'WarningMsg' },
+		{ name = 'error', hl = 'ErrorMsg' },
+		{ name = 'fatal', hl = 'ErrorMsg' }
+	}
+}
+
 local L = {}
 
-function L.new()
+function L.new(config, standalone)
 	local file = ('%s/%s.log'):format(vim.fn.stdpath('data'), 'polymorphic')
 
-	local obj = L
+	local obj
+	if standalone then
+		obj = L
+	else
+		obj = {}
+	end
+
+	local levels = {}
+	for i, v in ipairs(config.modes) do
+		levels[v.name] = i
+	end
 
 	local function make_string(...)
 		local t = {}
@@ -42,22 +80,88 @@ function L.new()
 		return table.concat(t, ' ')
 	end
 
-	local function log(message_builder, ...)
+	local console = vim.schedule_wrap(function(level, info, name, msg)
+		local line = string.format(
+			'%s:%s',
+			vim.fn.fnamemodify(info.short_src, ':t'),
+			info.currentline
+		)
+
+		local msg_string = string.format(
+			'[%-6s%s] %s: %s',
+			name,
+			os.date('%H:%M:%S'),
+			line,
+			msg
+		)
+
+		if config.highlights and level.hl then
+			vim.api.nvim_command(string.format(
+				'echohl %s',
+				level.hl
+			))
+		end
+
+		local split = vim.split(msg_string, '\n')
+		for _, v in ipairs(split) do
+			vim.api.nvim_command(string.format(
+				[[echom "[%s] %s"]],
+				config.module,
+				vim.fn.escape(v, '"')
+			))
+		end
+
+		if config.highlights and level.hl then
+			vim.api.nvim_command('echohl None')
+		end
+	end)
+
+	local function log_at_level(level, level_info, message_builder, ...)
+		-- If we're below the level in config, returning
+		if level < levels[config.level] then return end
+		local name = level_info.name:upper()
+
 		local msg = message_builder(...)
 		local info = debug.getinfo(2, 'Sl')
 		local line = info.short_src .. ':' .. info.currentline
 
-		local fp = io.open(file, 'w')
-		local str = string.format('[%s] %s: %s\n', os.date(), line, msg)
-		fp:write(str)
-		fp:close()
+		if config.use_console then
+			console(level_info, info, name, msg)
+		end
+
+		if config.use_file then
+			local fp = io.open(file, 'a')
+			local str = string.format(
+				'[%-6s%s] %s: %s\n',
+				name,
+				os.date(),
+				line,
+				msg
+			)
+			fp:write(str)
+			fp:close()
+		end
 	end
 
-	function obj.info(...)
-		return log(make_string, ...)
+	for i, x in ipairs(config.modes) do
+		obj[x.name] = function(...)
+			return log_at_level(i, x, make_string, ...)
+		end
+
+		obj[('fmt_%s'):format(x.name)] = function()
+			return log_at_level(i, x, function(...)
+				local passed = { ... }
+				local fmt = table.remove(passed, 1)
+				local inspected = {}
+				for _, v in ipairs(passed) do
+					table.insert(inspected, vim.inspect(v))
+				end
+				return string.format(fmt, table.unpack(inspected))
+			end)
+		end
 	end
 end
 
-L.new()
+L.new(default_config, true)
 
 return L
