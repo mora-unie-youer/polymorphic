@@ -19,7 +19,7 @@
 
 local C = {}
 
-C.source = debug.getinfo(1, "S").source:sub(2)
+C.source = debug.getinfo(1, 'S').source:sub(2)
 
 C.config = {
 	--  This table defines all the configurations that you can tweak to
