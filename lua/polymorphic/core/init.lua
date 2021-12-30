@@ -7,13 +7,12 @@
 --    /_/            /____/                    /_/                           --
 --       NeoVim configuration which can make your dreams come true.          --
 ---[[---------------------------------------------------------------------]]---
+--                           polymorphic.core                                --
+--                The heart of polymorphic configuration                     --
+---[[---------------------------------------------------------------------]]---
 --        Author: Mora Unie Youer <mora_unie_youer@riseup.net>               --
 --          URLs: https://github.com/mora-unie-youer/polymorphic             --
 --                https://gitlab.com/mora-unie-youer/polymorphic             --
 --                https://notabug.org/mora-unie-youer/polymorphic            --
 --       License: MIT                                                        --
 ---[[---------------------------------------------------------------------]]---
-
-local load_modules = require('polymorphic.utils.modules').load_modules
-
-load_modules('polymorphic', { 'core' })
