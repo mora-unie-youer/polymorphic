@@ -24,7 +24,13 @@ C.source = debug.getinfo(1, 'S').source:sub(2)
 C.config = {
 	--  This table defines all the configurations that you can tweak to
 	-- your needs.
-	polymorphic = {},
+	polymorphic = {
+		--- Logging
+		-- Set polymorphic logging level
+		-- Available options: trace, debug, info, warn, error, fatal
+		-- @default = info
+		logging = 'info',
+	},
 
 	--  This table defines all custom configurations that you want to use
 	-- in NeoVim, e.g. global variables.
