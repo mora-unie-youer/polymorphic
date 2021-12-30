@@ -148,16 +148,19 @@ function L.new(config, standalone)
 			return log_at_level(i, x, make_string, ...)
 		end
 
-		obj[('fmt_%s'):format(x.name)] = function()
+		obj[('fmt_%s'):format(x.name)] = function(...)
 			return log_at_level(i, x, function(...)
 				local passed = { ... }
 				local fmt = table.remove(passed, 1)
 				local inspected = {}
 				for _, v in ipairs(passed) do
-					table.insert(inspected, vim.inspect(v))
+					if type(v) ~= 'string' then v = vim.inspect(v) end
+					table.insert(inspected, v)
 				end
-				return string.format(fmt, table.unpack(inspected))
-			end)
+
+				local unpack = unpack or table.unpack
+				return string.format(fmt, unpack(inspected))
+			end, ...)
 		end
 	end
 end
