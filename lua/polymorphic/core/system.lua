@@ -31,6 +31,11 @@ S.polymorphic_root = stdpath('config')
 -- The polymorphic configuration root directory
 S.polymorphic_config_root = table.concat({ config, 'polymorphic' }, S.separator)
 
+-- If data dir is not there, create it (to avoid some errors with logging)
+if vim.fn.isdirectory(stdpath('data')) == 0 then
+	vim.fn.mkdir(stdpath('data'))
+end
+
 -- Checking if configuration directory doesn't exist.
 if vim.fn.isdirectory(S.polymorphic_config_root) == 0 then
 	S.polymorphic_config_root = stdpath('config')
