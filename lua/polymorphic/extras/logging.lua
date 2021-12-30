@@ -19,7 +19,7 @@
 
 local system = require('polymorphic.core.system')
 
-local logging_level = 'trace'
+local logging_level = 'info'
 local default_config = {
 	-- Name of the module where logging. Prepended to log messages
 	module = 'polymorphic',
