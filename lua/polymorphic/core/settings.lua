@@ -7,8 +7,8 @@
 --    /_/            /____/                    /_/                           --
 --       NeoVim configuration which can make your dreams come true.          --
 ---[[---------------------------------------------------------------------]]---
---                           polymorphic.core                                --
---                The heart of polymorphic configuration                     --
+--                         polymorphic.core.settings                         --
+--                        User's heart of polymorphic                        --
 ---[[---------------------------------------------------------------------]]---
 --        Author: Mora Unie Youer <mora_unie_youer@riseup.net>               --
 --          URLs: https://github.com/mora-unie-youer/polymorphic             --
@@ -17,11 +17,22 @@
 --       License: MIT                                                        --
 ---[[---------------------------------------------------------------------]]---
 
-local load_modules = require('polymorphic.utils.modules').load_modules
 local log = require('polymorphic.extras.logging')
+local config = require('polymorphic.core.config').config
 
--- Some useful debug information
-log.debug('Loading polymorphic core...')
+log.debug('Loading polymorphic settings module...')
 
-local core_modules = { 'config', 'settings' }
-load_modules('polymorphic.core', core_modules)
+vim.opt.hidden = true
+vim.opt.timeout = true
+vim.opt.timeoutlen = 500
+vim.opt.ttimeout = true
+vim.opt.ttimeoutlen = 10
+vim.opt.updatetime = 100
+
+vim.opt.colorcolumn = tostring(config.polymorphic.max_length)
+vim.opt.copyindent = true
+vim.opt.preserveindent = true
+vim.opt.shiftwidth = config.polymorphic.indent
+vim.opt.smartindent = true
+vim.opt.softtabstop = config.polymorphic.indent
+vim.opt.tabstop = config.polymorphic.indent
