@@ -30,7 +30,7 @@ C.config = {
 		-- Available options: trace, debug, info, warn, error, fatal
 		-- @default = info
 		logging = 'info',
-	}, Hi, I'm error :3
+	},
 
 	--  This table defines all custom configurations that you want to use
 	-- in NeoVim, e.g. global variables.
