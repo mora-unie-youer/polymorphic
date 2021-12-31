@@ -26,7 +26,7 @@ local config = {
 	source = nil,
 }
 
-log.debug('Loading polymorphic configuration module')
+log.debug('Loading polymorphic configuration module...')
 
 -- Paths:
 -- 1. ~/.config/polymorphic/polymorphic_config.lua (user config)
