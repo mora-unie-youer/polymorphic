@@ -7,7 +7,7 @@
 --    /_/            /____/                    /_/                           --
 --       NeoVim configuration which can make your dreams come true.          --
 ---[[---------------------------------------------------------------------]]---
---                          polymorphic_config                               --
+--                        polymorphic_config.lua                             --
 --                  Polymorphic user configuration file                      --
 ---[[---------------------------------------------------------------------]]---
 --        Author: Mora Unie Youer <mora_unie_youer@riseup.net>               --
@@ -30,7 +30,7 @@ C.config = {
 		-- Available options: trace, debug, info, warn, error, fatal
 		-- @default = info
 		logging = 'info',
-	},
+	}, Hi, I'm error :3
 
 	--  This table defines all custom configurations that you want to use
 	-- in NeoVim, e.g. global variables.
