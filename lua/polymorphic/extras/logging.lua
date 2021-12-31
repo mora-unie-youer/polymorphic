@@ -19,12 +19,27 @@
 
 local system = require('polymorphic.core.system')
 
-local logging_level = 'info'
+-- This level will be set only when fallback config couldn't be loaded
+local logging_level = 'trace'
 
-local config_path = system.polymorphic_config_root .. '/polymorphic_config.lua'
-local ok, ret = xpcall(dofile, debug.traceback, config_path)
+local config_file = '/polymorphic_config.lua'
+local fallback_config = '/polymorphic_config_fallback.lua'
+local user_config_path = system.polymorphic_config_root .. config_file
+local default_config_path = system.polymorphic_root .. config_file
+local fallback_config_path = system.polymorphic_root .. fallback_config
+local ok, ret = xpcall(dofile, debug.traceback, user_config_path)
 if ok then
 	logging_level = ret.config.polymorphic.logging
+else
+	ok, ret = xpcall(dofile, debug.traceback, default_config_path)
+	if ok then
+		logging_level = ret.config.polymorphic.logging
+	else
+		ok, ret = xpcall(dofile, debug.traceback, fallback_config_path)
+		if ok then
+			logging_level = ret.config.polymorphic.logging
+		end
+	end
 end
 
 local default_config = {
