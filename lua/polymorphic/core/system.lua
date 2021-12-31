@@ -36,11 +36,6 @@ if vim.fn.isdirectory(stdpath('data')) == 0 then
 	vim.fn.mkdir(stdpath('data'))
 end
 
--- Checking if configuration directory doesn't exist.
-if vim.fn.isdirectory(S.polymorphic_config_root) == 0 then
-	S.polymorphic_config_root = stdpath('config')
-end
-
 -- Polymorphic logs file path
 S.polymorphic_logs = table.concat({ stdpath('data'), 'polymorphic.log' }, S.separator)
 
