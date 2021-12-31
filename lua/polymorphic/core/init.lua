@@ -16,3 +16,12 @@
 --                https://notabug.org/mora-unie-youer/polymorphic            --
 --       License: MIT                                                        --
 ---[[---------------------------------------------------------------------]]---
+
+local load_modules = require('polymorphic.utils.modules').load_modules
+local log = require('polymorphic.extras.logging')
+
+-- Some useful debug information
+log.debug('Loading polymorphic core...')
+
+local core_modules = { 'config' }
+load_modules('polymorphic.core', core_modules)
