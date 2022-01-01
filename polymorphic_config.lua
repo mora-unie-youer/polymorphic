@@ -79,9 +79,9 @@ C.config = {
 
 		--- GUI
 		-- Set gui font here
-		-- @default = 'FiraCode Nerd Font Mono', @default = 8
+		-- @default = 'FiraCode Nerd Font Mono', @default = 7
 		guifont = 'FiraCode Nerd Font Mono',
-		guifont_size = 8,
+		guifont_size = 7,
 	},
 
 	--  This table defines all custom configurations that you want to use
