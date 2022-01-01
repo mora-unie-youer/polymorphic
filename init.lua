@@ -14,6 +14,9 @@
 --       License: MIT                                                        --
 ---[[---------------------------------------------------------------------]]---
 
+-- Loading impatient.nvim at the start
+pcall(require, 'impatient')
+
 local load_modules = require('polymorphic.utils.modules').load_modules
 
 -- Load polymorphic core
