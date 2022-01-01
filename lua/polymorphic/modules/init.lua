@@ -31,7 +31,7 @@ if vim.fn.empty(vim.fn.glob(path)) > 0 then
 	first_install = true
 end
 
-log.debug('Loading packer.nvim')
+log.debug('Loading packer.nvim...')
 vim.cmd([[packadd packer.nvim]])
 local packer = require('packer')
 
