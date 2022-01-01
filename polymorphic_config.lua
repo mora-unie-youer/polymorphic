@@ -76,6 +76,12 @@ C.config = {
 		-- Available options: trace, debug, info, warn, error, fatal
 		-- @default = info
 		logging = 'info',
+
+		--- GUI
+		-- Set gui font here
+		-- @default = 'SauceCodePro Nerd Font Mono', @default = 9
+		guifont = 'FiraCode Nerd Font Mono',
+		guifont_size = 8,
 	},
 
 	--  This table defines all custom configurations that you want to use

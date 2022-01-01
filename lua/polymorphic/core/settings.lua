@@ -22,6 +22,10 @@ local config = require('polymorphic.core.config').config
 
 log.debug('Loading polymorphic settings module...')
 
+local font = config.polymorphic.guifont..':h'..config.polymorphic.guifont_size
+vim.opt.guifont = font
+vim.opt.termguicolors = true
+
 vim.opt.hidden = true
 vim.opt.timeout = true
 vim.opt.timeoutlen = 500
