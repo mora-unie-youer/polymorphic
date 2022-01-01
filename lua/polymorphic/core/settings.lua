@@ -26,6 +26,9 @@ local font = config.polymorphic.guifont..':h'..config.polymorphic.guifont_size
 vim.opt.guifont = font
 vim.opt.termguicolors = true
 
+vim.opt.number = config.polymorphic.line_number
+vim.opt.relativenumber = config.polymorphic.relative_line_number
+
 vim.opt.hidden = true
 vim.opt.timeout = true
 vim.opt.timeoutlen = 500
