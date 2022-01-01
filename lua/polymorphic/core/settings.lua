@@ -24,6 +24,10 @@ log.debug('Loading polymorphic settings module...')
 
 local font = config.polymorphic.guifont..':h'..config.polymorphic.guifont_size
 vim.opt.guifont = font
+-- opt.guifont can to not work, if you use nerd font
+-- Force loading, using rpcnotify
+vim.fn.rpcnotify(0, 'Gui', 'Font', font, true)
+
 vim.opt.termguicolors = true
 
 vim.opt.number = config.polymorphic.line_number
