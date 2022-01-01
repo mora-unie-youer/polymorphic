@@ -56,6 +56,11 @@ C.config = {
 		-- @default = false
 		relative_line_number = false,
 
+		-- Enable mouse
+		-- @false: disable mouse
+		-- @true: enable mouse
+		mouse = true,
+
 		-- Enable showing current mode
 		-- @false: disable show mode
 		-- @true: enable show mode

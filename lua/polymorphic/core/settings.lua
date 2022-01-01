@@ -35,6 +35,7 @@ vim.opt.swapfile = config.polymorphic.swap_files
 vim.opt.number = config.polymorphic.line_number
 vim.opt.relativenumber = config.polymorphic.relative_line_number
 
+vim.opt.mouse = config.polymorphic.mouse and 'a'
 vim.opt.showmode = config.polymorphic.show_mode
 
 vim.opt.hidden = true
