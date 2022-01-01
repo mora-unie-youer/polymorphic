@@ -79,7 +79,7 @@ C.config = {
 
 		--- GUI
 		-- Set gui font here
-		-- @default = 'SauceCodePro Nerd Font Mono', @default = 9
+		-- @default = 'FiraCode Nerd Font Mono', @default = 8
 		guifont = 'FiraCode Nerd Font Mono',
 		guifont_size = 8,
 	},
