@@ -16,4 +16,10 @@
 
 local load_modules = require('polymorphic.utils.modules').load_modules
 
+-- Load polymorphic core
 load_modules('polymorphic', { 'core' })
+
+vim.defer_fn(function()
+	-- Load polymorphic modules
+	load_modules('polymorphic', { 'modules' })
+end, 0)
