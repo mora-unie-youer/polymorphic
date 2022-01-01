@@ -42,30 +42,24 @@ if ok then
 	config.config = ret.config
 	config.source = ret.source
 else
-	log.fmt_warn(
-		"Couldn't load user configuration. Traceback:\n%s",
-		ret
-	)
+	log.warn("Couldn't load user configuration")
+	log.fmt_trace('Traceback:\n%s', ret)
 
 	ok, ret = xpcall(dofile, debug.traceback, default_config_path)
 	if ok then
 		config.config = ret.config
 		config.source = ret.source
 	else
-		log.fmt_error(
-			"Couldn't load default configuration. Using fallback. Traceback:\n%s",
-			ret
-		)
+		log.error("Couldn't load default configuration")
+		log.fmt_trace('Traceback:\n%s', ret)
 
 		ok, ret = xpcall(dofile, debug.traceback, fallback_config_path)
 		if ok then
 			config.config = ret.config
 			config.source = ret.source
 		else
-			log.fmt_fatal(
-				"Couldn't load fallback configuration. Traceback:\n%s",
-				ret
-			)
+			log.fatal("Couldn't load fallback configuration")
+			log.fmt_trace('Traceback:\n%s', ret)
 		end
 	end
 end
