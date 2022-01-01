@@ -30,6 +30,8 @@ vim.fn.rpcnotify(0, 'Gui', 'Font', font, true)
 
 vim.opt.termguicolors = true
 
+vim.opt.swapfile = config.polymorphic.swap_files
+
 vim.opt.number = config.polymorphic.line_number
 vim.opt.relativenumber = config.polymorphic.relative_line_number
 
