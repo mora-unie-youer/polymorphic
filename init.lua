@@ -14,6 +14,9 @@
 --       License: MIT                                                        --
 ---[[---------------------------------------------------------------------]]---
 
+-- Storing startup time
+vim.g.start_time = vim.fn.reltime()
+
 -- Loading impatient.nvim at the start
 pcall(require, 'impatient')
 
