@@ -26,8 +26,6 @@ local config = {
 	source = nil,
 }
 
-log.debug('Loading polymorphic configuration module...')
-
 -- Paths:
 -- 1. ~/.config/polymorphic/polymorphic_config.lua (user config)
 -- 2. stdpath('config')/polymorphic_config.lua (default config)

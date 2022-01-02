@@ -20,8 +20,6 @@
 local log = require('polymorphic.extras.logging')
 local config = require('polymorphic.core.config').config
 
-log.debug('Loading polymorphic settings module...')
-
 local font = config.polymorphic.guifont..':h'..config.polymorphic.guifont_size
 vim.opt.guifont = font
 -- opt.guifont can to not work, if you use nerd font

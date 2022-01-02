@@ -24,14 +24,12 @@ local M = {}
 function M.load_modules(module_path, modules)
 	for _, module in ipairs(modules) do
 		local mod = string.format('%s.%s', module_path, module)
+		log.fmt_debug('Loading `%s` module...', mod)
 		local ok, err = xpcall(require, debug.traceback, mod)
 
 		if not ok then
-			log.fmt_error(
-				'There was an error loading the module `%s`. Traceback:\n%s',
-				mod,
-				err
-			)
+			log.fmt_error('There was an error loading the module `%s`.', mod)
+			log.fmt_trace('Traceback:\n%s', err)
 		else
 			log.fmt_debug('Successfully loaded `%s` module', mod)
 		end
