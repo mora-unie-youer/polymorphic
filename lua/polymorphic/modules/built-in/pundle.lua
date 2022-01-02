@@ -7,8 +7,8 @@
 --    /_/            /____/                    /_/                           --
 --       NeoVim configuration which can make your dreams come true.          --
 ---[[---------------------------------------------------------------------]]---
---                           polymorphic.modules                             --
---                    The extendable heart of polymorphic                    --
+--                   polymorphic.modules.built-in.pundle                     --
+--                       Polymorphic plugins manager                         --
 ---[[---------------------------------------------------------------------]]---
 --        Author: Mora Unie Youer <mora_unie_youer@riseup.net>               --
 --          URLs: https://github.com/mora-unie-youer/polymorphic             --
@@ -19,5 +19,8 @@
 
 local log = require('polymorphic.extras.logging')
 
-log.debug('Loading plugin manager...')
-local pundle = require('polymorphic.modules.built-in.pundle')
+local P = {}
+
+
+
+return P
