@@ -28,6 +28,9 @@ vim.opt.guifont = font
 -- Force loading, using rpcnotify
 vim.fn.rpcnotify(0, 'Gui', 'Font', font, true)
 
+if vim.fn.exists('+guicolors') == 1 then
+	vim.opt.guicolors = true
+end
 vim.opt.termguicolors = true
 
 vim.opt.swapfile = config.polymorphic.swap_files
