@@ -17,7 +17,7 @@
 --       License: MIT                                                        --
 ---[[---------------------------------------------------------------------]]---
 
-local log = require('polymorphic.extras.logging')
+local log = require('polymorphic.extras.logging').new({ module = 'pundle' })
 
 local cmd = vim.api.nvim_command
 
