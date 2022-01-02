@@ -19,8 +19,30 @@
 
 local log = require('polymorphic.extras.logging')
 
+local cmd = vim.api.nvim_command
+
 local P = {}
 
+local module = 'polymorphic.modules.built-in.pundle'
+cmd("command! PundleClean   lua require('" .. module .. "').clean()")
+cmd("command! PundleInstall lua require('" .. module .. "').install()")
+cmd("command! PundleList    lua require('" .. module .. "').list()")
+cmd("command! PundleSync    lua require('" .. module .. "').sync()")
+cmd("command! PundleUpdate  lua require('" .. module .. "').update()")
 
+function P.clean()
+end
+
+function P.install()
+end
+
+function P.list()
+end
+
+function P.sync()
+end
+
+function P.update()
+end
 
 return P
