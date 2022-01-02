@@ -72,7 +72,8 @@ local default_config = {
 local L = {}
 
 function L.new(config, standalone)
-	local file = ('%s/%s.log'):format(vim.fn.stdpath('data'), 'polymorphic')
+	config = vim.tbl_deep_extend('force', default_config, config)
+	local file = ('%s/%s.log'):format(vim.fn.stdpath('data'), config.module)
 
 	local obj
 	if standalone then
@@ -185,6 +186,8 @@ function L.new(config, standalone)
 			end, ...)
 		end
 	end
+
+	return obj
 end
 
 L.new(default_config, true)
