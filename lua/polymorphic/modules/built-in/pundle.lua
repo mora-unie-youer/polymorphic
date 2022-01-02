@@ -21,7 +21,10 @@ local log = require('polymorphic.extras.logging').new({ module = 'pundle' })
 
 local cmd = vim.api.nvim_command
 
-local P = {}
+local P = {
+	plugins = {},
+	path = vim.fn.stdpath('data') .. '/site/pack/pundle',
+}
 
 local module = 'polymorphic.modules.built-in.pundle'
 cmd("command! PundleClean   lua require('" .. module .. "').clean()")
@@ -43,6 +46,35 @@ function P.sync()
 end
 
 function P.update()
+end
+
+function P.register(plugins)
+	if not plugins then
+		log.error('Provided nil instead of plugin list.')
+		plugins = {}
+	end
+
+	for _, plugin in ipairs(plugins) do
+		if type(plugin) == 'string' then
+			plugin = { plugin }
+		end
+
+		if type(plugin) ~= 'table' then
+			log.error(
+				'Invalid plugin declaration (neither string nor table):\n%s',
+				plugin
+			)
+		end
+
+		local path = P.path .. (plugin.opt and '/opt/' or '/start/') .. plugin[1]
+		P.plugins[plugin[1]] = {
+			branch = plugin.branch,
+			path = path,
+			installed = vim.fn.isdirectory(dir) ~= 0,
+			run = plugin.run,
+			url = plugin.url or 'https://github.com/%s.git',
+		}
+	end
 end
 
 return P
