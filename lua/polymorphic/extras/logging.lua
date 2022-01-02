@@ -72,6 +72,7 @@ local default_config = {
 local L = {}
 
 function L.new(config, standalone)
+	config = config or {}
 	config = vim.tbl_deep_extend('force', default_config, config)
 	local file = ('%s/%s.log'):format(vim.fn.stdpath('data'), config.module)
 
