@@ -57,6 +57,13 @@ packer.startup(function(use)
 	-- Useful library, used by many plugins
 	use { 'nvim-lua/plenary.nvim' }
 
+	--- UI
+	-- Start screen
+	use {
+		'glepnir/dashboard-nvim',
+		config = require('polymorphic.modules.config.dashboard'),
+	}
+
 	-- Sync if it's first install
 	if first_install then
 		log.info('Syncing the plugins at the fresh install...')
