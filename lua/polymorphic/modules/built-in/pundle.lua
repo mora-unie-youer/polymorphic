@@ -23,7 +23,7 @@ local cmd = vim.api.nvim_command
 
 local P = {
 	plugins = {},
-	path = vim.fn.stdpath('data') .. '/site/pack/pundle',
+	path = vim.fn.stdpath('data') .. '/site/pack/pundle/',
 }
 
 local module = 'polymorphic.modules.built-in.pundle'
@@ -37,6 +37,21 @@ function P.clean()
 end
 
 function P.install()
+	for plugin, args in pairs(P.plugins) do
+		log.fmt_debug('Installing plugin `%s`', plugin)
+		local command = {
+			'git', 'clone', string.format(args.url, plugin),
+			'--depth=1', '--recurse-submodules', '--shallow-submodules'
+		}
+
+		if args.branch then
+			vim.list_extend(command, { '-b', args.branch })
+		end
+
+		vim.list_extend(command, { args.path })
+		vim.fn.system(command)
+		log.fmt_debug('Successfully installed plugin `%s`', plugin)
+	end
 end
 
 function P.list()
@@ -60,14 +75,21 @@ function P.register(plugins)
 		end
 
 		if type(plugin) ~= 'table' then
-			log.error(
-				'Invalid plugin declaration (neither string nor table):\n%s',
+			log.fmt_error(
+				'Invalid plugin declaration (neither string nor table): %s',
 				plugin
 			)
 		end
 
-		local path = P.path .. (plugin.opt and '/opt/' or '/start/') .. plugin[1]
+		if type(plugin[1]) ~= 'string' then
+			log.error('First field in plugin definition must be a string.')
+		end
+
+		local as = plugin.as
+		local name = plugin[1]:match('/([%w-_.]+)$')
+		local path = P.path .. (plugin.opt and 'opt/' or 'start/') .. (as or name)
 		P.plugins[plugin[1]] = {
+			as = as,
 			branch = plugin.branch,
 			path = path,
 			installed = vim.fn.isdirectory(dir) ~= 0,
