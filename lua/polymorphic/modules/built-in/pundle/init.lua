@@ -97,17 +97,11 @@ function P.register(plugins)
 			log.error('First field in plugin definition must be a string.')
 		end
 
-		local as = plugin.as
-		local name = plugin[1]:match('/([%w-_.]+)$')
-		local path = P.path .. (plugin.opt and 'opt/' or 'start/') .. (as or name)
-		P.plugins[plugin[1]] = {
-			as = as,
-			branch = plugin.branch,
-			path = path,
-			installed = vim.fn.isdirectory(dir) ~= 0,
-			run = plugin.run,
-			url = plugin.url or 'https://github.com/%s.git',
-		}
+		P.plugins[plugin[1]] = vim.tbl_deep_extend(
+			'force',
+			{ url = 'https://github.com/%s.git' },
+			plugin
+		)
 	end
 end
 
