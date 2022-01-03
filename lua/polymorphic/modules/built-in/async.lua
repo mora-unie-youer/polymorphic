@@ -19,49 +19,79 @@
 
 local log = require('polymorphic.extras.logging').new({ module = 'async' })
 
-local yield = coroutine.yield
-local resume = coroutine.resume
-local create = coroutine.create
+local async = {}
+function async:new(func)
+	-- Default asynchronous function wrapper
+	local function step(func, cb, args)
+		-- Creating new thread
+		local thread = coroutine.create(func)
 
-local A = {}
-
-local function NOP() end
-local function step(func, callback)
-	local thread = create(func)
-
-	local function tick(...)
-		local ok, res = resume(thread, ...)
-		if ok then
-			if type(res) == 'function' then
-				res(tick)
+		local function tick(...)
+			-- No operation
+			local function NOP() end
+			local unpack = unpack or table.unpack
+			-- Executing thread
+			local ok, res = coroutine.resume(thread, ...)
+			if ok then
+				if type(res) == 'function' then
+					res(tick)
+				else
+					(cb or NOP)(res)
+				end
 			else
-				(callback or NOP)(res)
+				log.fmt_error('Error in coroutine: %s', res);
+				(cb or NOP)(nil)
 			end
-		else
-			log.fmt_error('Error in coroutine: %s', res);
-			(callback or NOP)(nil)
+		end
+
+		tick(unpack(args))
+	end
+
+	-- Asynchronous function object
+	local obj = {}
+	obj._args = nil
+	obj._func = func
+	obj._wrapper = step
+
+	-- If 'func' is 'nil', then we want to vim.schedule()
+	if not func then
+		obj._thread = function(f) vim.schedule(f) end
+	else
+		obj._thread = function(tick)
+			return obj._wrapper(obj._func, tick, obj._args)
 		end
 	end
 
-	tick()
-end
-
-function A.wrap(func)
-	return function(...)
-		local params = { ... }
-		return function(tick)
-			table.insert(params, tick)
-			return func(unpack(params))
-		end
+	-- Set asynchronous function wrapper
+	function obj:wrap(wrapper)
+		obj._wrapper = wrapper
+		return obj
 	end
+
+	-- Await for process
+	function obj:await(...)
+		obj._args = { ... }		
+		return coroutine.yield(self._thread)
+	end
+
+	-- Run without awaiting
+	function obj:run(...)
+		obj._args = { ... }
+		return obj._thread()
+	end
+
+	-- Attaching metatable
+	setmetatable(obj, self)
+	self.__index = self
+
+	-- Action when calling this table
+	function self:__call(...)
+		return self.run(...)
+	end
+
+	return obj
 end
 
--- Used for unlocking output
-A.main = function(f) vim.schedule(f) end
--- Used for defining async functions
-A.sync = A.wrap(step)
--- Used for awaiting async functions
-A.wait = yield
-
-
-return A
+return setmetatable(async, {
+	__call = function(_, func) return async:new(func) end
+})
