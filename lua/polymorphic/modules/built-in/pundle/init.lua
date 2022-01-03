@@ -28,12 +28,12 @@ local P = {
 }
 
 local module = 'polymorphic.modules.built-in.pundle'
-cmd("command! PundleClean   lua require('" .. module .. "').clean()")
-cmd("command! PundleCompile lua require('" .. module .. "').compile()")
-cmd("command! PundleInstall lua require('" .. module .. "').install()")
-cmd("command! PundleStatus  lua require('" .. module .. "').status()")
-cmd("command! PundleSync    lua require('" .. module .. "').sync()")
-cmd("command! PundleUpdate  lua require('" .. module .. "').update()")
+cmd("command! PundleClean   lua require('" .. module .. "').clean()()")
+cmd("command! PundleCompile lua require('" .. module .. "').compile()()")
+cmd("command! PundleInstall lua require('" .. module .. "').install()()")
+cmd("command! PundleStatus  lua require('" .. module .. "').status()()")
+cmd("command! PundleSync    lua require('" .. module .. "').sync()()")
+cmd("command! PundleUpdate  lua require('" .. module .. "').update()()")
 
 function P.clean()
 	return a.sync(function()
