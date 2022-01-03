@@ -18,7 +18,7 @@
 ---[[---------------------------------------------------------------------]]---
 
 local log = require('polymorphic.extras.logging').new({ module = 'pundle' })
-local a = require('polymorphic.modules.built-in.async')
+local async = require('polymorphic.modules.built-in.async')
 
 local cmd = vim.api.nvim_command
 
@@ -46,45 +46,45 @@ local function require_and_configure(name)
 end
 
 function P.clean()
-	return a.sync(function()
+	return async(function()
 	end)
 end
 
 function P.compile()
-	return a.sync(function()
+	return async(function()
 	end)
 end
 
 function P.install()
 	log.debug('Installing plugins...')
 
-	return a.sync(function()
+	return async(function()
 		local utils = require_and_configure('utils')
 
-		local plugins = a.wait(utils.get_plugins())
+		local plugins = utils.get_plugins():await()
 		local missing = plugins.missing
 
 		if #missing == 0 then
 			log.info('All plugins are installed')
 		end
 
-		a.wait(a.main)
+		async():await()
 		-- Doing installation
 	end)
 end
 
 function P.status()
-	return a.sync(function()
+	return async(function()
 	end)
 end
 
 function P.sync()
-	return a.sync(function()
+	return async(function()
 	end)
 end
 
 function P.update()
-	return a.sync(function()
+	return async(function()
 	end)
 end
 

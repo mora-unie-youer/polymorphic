@@ -18,7 +18,7 @@
 ---[[---------------------------------------------------------------------]]---
 
 local log = require('polymorphic.extras.logging').new({ module = 'pundle' })
-local a = require('polymorphic.modules.built-in.async')
+local async = require('polymorphic.modules.built-in.async')
 
 local U = {}
 local config = nil
@@ -49,8 +49,8 @@ function U.installed_plugins()
 end
 
 -- Return missing plugin list ((opt + start) - installed)
-function U.missing_plugins(opt, start)
-	return a.sync(function()
+function U.missing_plugins()
+	return async(function(opt, start)
 		local missing = {}
 		for plugin_full_name, plugin in pairs(config.plugins) do
 			local plugin_orig_name = plugin_full_name:match('/([%w-_.]+)$')
@@ -74,7 +74,7 @@ function U.missing_plugins(opt, start)
 							plugin.as
 						)
 						vim.loop.fs_rename(plugin_alt_path, plugin_path)
-						a.wait(a.main)
+						async():await()
 					end
 				else
 					table.insert(missing, plugin_full_name)
@@ -88,9 +88,9 @@ end
 
 -- Return all plugins list (opt, start and missing)
 function U.get_plugins()
-	return a.sync(function()
+	return async(function()
 		local opt, start = U.installed_plugins()
-		local missing = a.wait(U.missing_plugins(opt, start))
+		local missing = U.missing_plugins():await(opt, start)
 		return { missing = missing, start = start, opt = opt }
 	end)
 end
