@@ -35,6 +35,16 @@ cmd("command! PundleStatus  lua require('" .. module .. "').status()()")
 cmd("command! PundleSync    lua require('" .. module .. "').sync()()")
 cmd("command! PundleUpdate  lua require('" .. module .. "').update()()")
 
+local function require_and_configure(name)
+	local full_module_name = string.format('%s.%s', module, name)
+	local mod = require(full_module_name)
+	if mod.config then
+		mod.config(P)
+		return mod
+	end
+	return mod
+end
+
 function P.clean()
 	return a.sync(function()
 	end)
