@@ -56,7 +56,20 @@ function P.compile()
 end
 
 function P.install()
+	log.debug('Installing plugins...')
+
 	return a.sync(function()
+		local utils = require_and_configure('utils')
+
+		local plugins = a.wait(utils.get_plugins())
+		local missing = plugins.missing
+
+		if #missing == 0 then
+			log.info('All plugins are installed')
+		end
+
+		a.wait(a.main)
+		-- Doing installation
 	end)
 end
 
