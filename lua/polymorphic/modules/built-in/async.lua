@@ -55,7 +55,13 @@ function A.wrap(func)
 		end
 	end
 end
+
+-- Used for unlocking output
+A.main = function(f) vim.schedule(f) end
+-- Used for defining async functions
 A.sync = A.wrap(step)
+-- Used for awaiting async functions
 A.wait = yield
+
 
 return A
