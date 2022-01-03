@@ -7,8 +7,8 @@
 --    /_/            /____/                    /_/                           --
 --       NeoVim configuration which can make your dreams come true.          --
 ---[[---------------------------------------------------------------------]]---
---                 polymorphic.modules.built-in.pundle.async                 --
---                  Attempt to provide some async to pundle                  --
+--                     polymorphic.modules.built-in.async                    --
+--                Attempt to provide some async to polymorphic               --
 ---[[---------------------------------------------------------------------]]---
 --        Author: Mora Unie Youer <mora_unie_youer@riseup.net>               --
 --          URLs: https://github.com/mora-unie-youer/polymorphic             --
@@ -17,8 +17,7 @@
 --       License: MIT                                                        --
 ---[[---------------------------------------------------------------------]]---
 
-local log = require('polymorphic.extras.logging')
-	.new({ module = 'pundle.async' })
+local log = require('polymorphic.extras.logging').new({ module = 'async' })
 
 local yield = coroutine.yield
 local resume = coroutine.resume
