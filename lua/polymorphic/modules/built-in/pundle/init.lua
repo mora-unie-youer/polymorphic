@@ -18,6 +18,7 @@
 ---[[---------------------------------------------------------------------]]---
 
 local log = require('polymorphic.extras.logging').new({ module = 'pundle' })
+local a = require('polymorphic.modules.built-in.async')
 
 local cmd = vim.api.nvim_command
 
@@ -28,39 +29,40 @@ local P = {
 
 local module = 'polymorphic.modules.built-in.pundle'
 cmd("command! PundleClean   lua require('" .. module .. "').clean()")
+cmd("command! PundleCompile lua require('" .. module .. "').compile()")
 cmd("command! PundleInstall lua require('" .. module .. "').install()")
-cmd("command! PundleList    lua require('" .. module .. "').list()")
+cmd("command! PundleStatus  lua require('" .. module .. "').status()")
 cmd("command! PundleSync    lua require('" .. module .. "').sync()")
 cmd("command! PundleUpdate  lua require('" .. module .. "').update()")
 
 function P.clean()
+	return a.sync(function()
+	end)
+end
+
+function P.compile()
+	return a.sync(function()
+	end)
 end
 
 function P.install()
-	for plugin, args in pairs(P.plugins) do
-		log.fmt_debug('Installing plugin `%s`', plugin)
-		local command = {
-			'git', 'clone', string.format(args.url, plugin),
-			'--depth=1', '--recurse-submodules', '--shallow-submodules'
-		}
-
-		if args.branch then
-			vim.list_extend(command, { '-b', args.branch })
-		end
-
-		vim.list_extend(command, { args.path })
-		vim.fn.system(command)
-		log.fmt_debug('Successfully installed plugin `%s`', plugin)
-	end
+	return a.sync(function()
+	end)
 end
 
-function P.list()
+function P.status()
+	return a.sync(function()
+	end)
 end
 
 function P.sync()
+	return a.sync(function()
+	end)
 end
 
 function P.update()
+	return a.sync(function()
+	end)
 end
 
 function P.register(plugins)
