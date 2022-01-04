@@ -43,6 +43,7 @@ function async:new(func)
 			end
 		end
 
+		-- Running thread with arguments
 		local unpack = unpack or table.unpack
 		tick(unpack(args))
 	end
@@ -75,8 +76,7 @@ function async:new(func)
 	end
 
 	-- Run without awaiting
-	function obj:run(...)
-		obj._args = { ... }
+	function obj:run()
 		return obj._thread()
 	end
 
@@ -84,9 +84,10 @@ function async:new(func)
 	setmetatable(obj, self)
 	self.__index = self
 
-	-- Action when calling this table
+	-- Action when calling this table (running function)
 	function self:__call(...)
-		return self.run(...)
+		self._args = { ... }
+		return self.run()
 	end
 
 	return obj
