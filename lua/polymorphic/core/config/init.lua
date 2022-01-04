@@ -7,8 +7,8 @@
 --    /_/            /____/                    /_/                           --
 --       NeoVim configuration which can make your dreams come true.          --
 ---[[---------------------------------------------------------------------]]---
---                        polymorphic.core.config                            --
---                    The heart of polymorphic config                        --
+--                          polymorphic.core.config                          --
+--                      The heart of polymorphic config                      --
 ---[[---------------------------------------------------------------------]]---
 --        Author: Mora Unie Youer <mora_unie_youer@riseup.net>               --
 --          URLs: https://github.com/mora-unie-youer/polymorphic             --
