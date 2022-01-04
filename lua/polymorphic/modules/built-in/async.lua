@@ -29,7 +29,6 @@ function async:new(func)
 		local function tick(...)
 			-- No operation
 			local function NOP() end
-			local unpack = unpack or table.unpack
 			-- Executing thread
 			local ok, res = coroutine.resume(thread, ...)
 			if ok then
@@ -44,6 +43,7 @@ function async:new(func)
 			end
 		end
 
+		local unpack = unpack or table.unpack
 		tick(unpack(args))
 	end
 
