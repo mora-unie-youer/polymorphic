@@ -7,8 +7,8 @@
 --    /_/            /____/                    /_/                           --
 --       NeoVim configuration which can make your dreams come true.          --
 ---[[---------------------------------------------------------------------]]---
---                   polymorphic.modules.built-in.pundle                     --
---                       Polymorphic plugins manager                         --
+--                    polymorphic.modules.built-in.pundle                    --
+--                        Polymorphic plugins manager                        --
 ---[[---------------------------------------------------------------------]]---
 --        Author: Mora Unie Youer <mora_unie_youer@riseup.net>               --
 --          URLs: https://github.com/mora-unie-youer/polymorphic             --
