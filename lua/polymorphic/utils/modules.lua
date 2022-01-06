@@ -21,6 +21,15 @@ local log = require('polymorphic.extras.logging')
 
 local M = {}
 
+function M.module_loaded(module_pattern)
+	for module, _ in pairs(package.loaded) do
+		if module:match(module_pattern) then
+			return true
+		end
+	end
+	return false
+end
+
 function M.load_modules(module_path, modules)
 	for _, module in ipairs(modules) do
 		local mod = string.format('%s.%s', module_path, module)
