@@ -37,10 +37,13 @@ cmd("command! PundleUpdate  lua require('" .. module .. "').update()()")
 
 local function require_and_configure(name)
 	local full_module_name = string.format('%s.%s', module, name)
+	-- Checking if module was loaded before
+	local module_utils = require('polymorphic.utils.modules')
+	-- Loading module
 	local mod = require(full_module_name)
-	if mod.config then
+	-- If wasn't loaded before, configuring, if possible
+	if not module_utils.module_loaded(full_module_name) and mod.config then
 		mod.config(P)
-		return mod
 	end
 	return mod
 end
