@@ -27,6 +27,22 @@ function U.config(_config)
 	config = _config
 end
 
+-- Function to set plugin's type ('local' or 'git' for now)
+function U.guess_plugin_type(plugin)
+	-- Checking if plugin name is directory
+	if vim.fn.isdirectory(plugin[1]) ~= 0 then
+		-- If directory found - we think it's local plugin
+		plugin.type = 'local'
+		plugin.url = plugin[1]
+	else
+		-- Otherwise we are using git plugin
+		plugin.type = 'git'
+		-- Using GitHub by default
+		local git_url = plugin.git_url or 'https://github.com/%s.git'
+		plugin.url = git_url:format(plugin[1])
+	end
+end
+
 -- Returns plugin list according to file system
 function U.installed_plugins()
 	local function look_dir(path)
