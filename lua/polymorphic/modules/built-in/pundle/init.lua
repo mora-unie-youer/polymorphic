@@ -92,6 +92,8 @@ function P.update()
 end
 
 function P.register(plugins)
+	local utils = require_and_configure('utils')
+
 	if not plugins then
 		log.error('Provided nil instead of plugin list.')
 		plugins = {}
@@ -113,11 +115,10 @@ function P.register(plugins)
 			log.error('First field in plugin definition must be a string.')
 		end
 
-		P.plugins[plugin[1]] = vim.tbl_deep_extend(
-			'force',
-			{ url = 'https://github.com/%s.git' },
-			plugin
-		)
+		-- Getting plugin type
+		utils.guess_plugin_type(plugin)
+		-- Adding plugin to configuration (and removing plugin name from table)
+		P.plugins[table.remove(plugin, 1)] = plugin
 	end
 end
 
