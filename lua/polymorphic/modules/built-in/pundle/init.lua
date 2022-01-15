@@ -92,6 +92,7 @@ function P.update()
 end
 
 function P.register(plugins)
+	local types = require_and_configure('types')
 	local utils = require_and_configure('utils')
 
 	if not plugins then
@@ -117,6 +118,9 @@ function P.register(plugins)
 
 		-- Getting plugin type
 		utils.guess_plugin_type(plugin)
+		-- Loading installer for this type
+		types[plugin.type].setup(plugin)
+
 		-- Adding plugin to configuration (and removing plugin name from table)
 		P.plugins[table.remove(plugin, 1)] = plugin
 	end
