@@ -57,6 +57,26 @@ function async:new(func)
 	-- If 'func' is 'nil', then we want to vim.schedule()
 	if not func then
 		obj._thread = function(f) vim.schedule(f) end
+	-- If 'func' is 'table' (list of async functions), then we want to wait them
+	elseif type(func) == 'table' then
+		obj._thread = function(tick)
+			local result = {}
+
+			-- If job list is empty, returning
+			if #func == 0 then
+				return tick()
+			end
+
+			local remaining = #func
+			for i, f in ipairs(func) do
+				local function callback(...)
+					result[i] = { ... }
+					remaining = remaining - 1
+					if remaining == 0 then obj._wrapper(unpack(result)) end
+				end
+				f(callback)
+			end
+		end
 	else
 		obj._thread = function(tick)
 			return obj._wrapper(obj._func, tick, obj._args)
