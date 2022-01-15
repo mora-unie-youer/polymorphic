@@ -121,6 +121,24 @@ function P.register(plugins)
 		-- Loading installer for this type
 		types[plugin.type].setup(plugin)
 
+		-- Listing required packages, if needed
+		if plugin.requires then
+			if type(plugin.requires) == 'string' then
+				plugin.requires = { plugin.requires }
+			end
+
+			for _, req in ipairs(plugin.requires) do
+				if type(req) == 'string' then
+					req = { req }
+				end
+
+				-- Checking if plugin is not listed
+				if not P.plugins[req[1]] then
+					P.register { req }
+				end
+			end
+		end
+
 		-- Adding plugin to configuration (and removing plugin name from table)
 		P.plugins[table.remove(plugin, 1)] = plugin
 	end
