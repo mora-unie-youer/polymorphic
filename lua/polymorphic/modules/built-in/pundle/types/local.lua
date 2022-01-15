@@ -25,6 +25,11 @@ function T.config(_config)
 end
 
 function T.setup(plugin)
+	function plugin.install()
+	end
+
+	function plugin.update()
+	end
 end
 
 return T
