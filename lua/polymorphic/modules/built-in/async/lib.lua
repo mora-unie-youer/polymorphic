@@ -45,4 +45,14 @@ function A.wrap(func, argc)
 	end
 end
 
+function A.run(async, callback)
+	assert(type(async) == 'function', 'Expected function, got ' .. type(async))
+	async(callback or function() end)
+end
+
+function A.await(async)
+	assert(type(async) == 'function', 'Expected function, got ' .. type(async))
+	async(nil)
+end
+
 return A
