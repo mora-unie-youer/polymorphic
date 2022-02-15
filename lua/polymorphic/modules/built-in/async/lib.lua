@@ -22,6 +22,35 @@ local unpack = unpack or table.unpack
 
 local A = {}
 
+local function finish(step, thread, callback, ...)
+	local ok = select(1, ...)
+	if not ok then
+		local msg = select(2, ...)
+		log.fmt_error('The coroutine failed with message: %s', msg)
+	end
+
+	if coroutine.status(thread) == 'dead' then
+		(callback or function() end)(select(2, ...))
+	else
+		assert(select('#', select(2, ...)) == 1, 'Expected a single return value')
+		local async = select(2, ...)
+		assert(type(async) == 'function', 'Expected function, got ' .. type(async))
+		async(step)
+	end
+end
+
+local function execute(async, callback, ...)
+	assert(type(async) == 'function', 'Expected function, got ' .. type(async))
+
+	local thread = coroutine.create(async)
+	
+	local step = function(...)
+		finish(step, thread, callback, coroutine.resume(thread, ...))
+	end
+
+	step(...)
+end
+
 function A.wrap(func, argc)
 	assert(type(func) == 'function', 'Expected function, got ' .. type(func))
 	assert(type(argc) == 'number',   'Expected number, got ' .. type(func))
