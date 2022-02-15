@@ -27,18 +27,13 @@ function A.wrap(func, argc)
 	assert(type(argc) == 'number',   'Expected number, got ' .. type(func))
 
 	return function(...)
-		local params = { count = select('#', ...), ... }
+		local params = { ... }
 
 		local function future(step)
 			if step then
-				-- If count of arguments is variadic
-				if argc == -1 then
-					table.insert(params, step)
-					params.count = params.count + 1
-				else
-					params[argc] = step
-					params.count = argc
-				end
+				assert(argc == #params or argc == -1, 'Incorrect number of arguments')
+				-- Inserting step function at the end
+				table.insert(params, step)
 				-- Calling function
 				return func(unpack(params))
 			else
